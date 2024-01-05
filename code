@@ -1,0 +1,43 @@
+def code1():
+    from ultralytics import YOLO
+    a = input()
+    model = YOLO('yolov8n-pose.pt')
+    source = a
+    model.predict(source, save=True, imgsz=320, conf=0.5)
+def code2():
+    import cv2
+    from ultralytics import YOLO
+    model = model = YOLO('yolov8n-pose.pt')
+    video_path = 0
+    cap = cv2.VideoCapture(video_path)
+    while cap.isOpened():
+        success, frame = cap.read()
+        if success:
+            results = model(frame, save=True)
+            annotated_frame = results[0].plot()
+            cv2.imshow("YOLOv8 Inference", annotated_frame)
+            if cv2.waitKey(1) & 0xFF == ord("q"):
+                break
+        else:
+            break
+    cap.release()
+    cv2.destroyAllWindows()
+
+
+def main():
+    print("Choose which code to run:")
+    print("1. Code 1")
+    print("2. Code 2")
+
+    choice = input("Enter your choice (1 or 2): ")
+
+    if choice == '1':
+        code1()
+    elif choice == '2':
+        code2()
+    else:
+        print("Invalid choice. Please enter 1 or 2.")
+
+
+if __name__ == "__main__":
+    main()
